@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> metrics-core 简析 · Hexo</title><meta name="description" content="metrics-core 简析 - John Doe"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Hexo"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://www.weibo.com/u/1758298003" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/wudan3551" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">metrics-core 简析</h1><div class="post-info">Jan 6, 2019</div><div class="post-content"><p>metrics-core是一个开源的Java监控打点系统，目前在github上star数达到了6186，这个看起来很不错，但是通过代码我们还是能发现一些问题</p>
+<h2 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h2><ul>
+<li>Timer（计数）写死了是EWMA(exponentially-weighted moving average)，也指数衰减平均值，简单来说就是最近1分钟内的平均值需要计算入一分钟之前的计数，导致明明当前系统已经没有调用了，但是还能看到Timer的计数非0</li>
+</ul>
+<h2 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h2><ul>
+<li>Meter 次数监控，以rate形式呈现</li>
+<li>Histogram 时间监控，带分位数</li>
+<li>Gauge 实时监控，监控生成监控的那个时间点的值，一般用来监控队列大小之类的</li>
+<li>Counter 计数，只有增加和减少两个方法，从程序启动后计数的总数，目前看基本没啥用</li>
+<li>Timer Meter和Histogram的集合体，即包括了次数和时间监控</li>
+</ul>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li>metrics-core <a href="https://metrics.dropwizard.io/4.0.0/getting-started.html" target="_blank" rel="noopener">quickstart</a></li>
+</ol>
+</div></article></div></main><footer><div class="paginator"><a href="/2018/12/31/hello-world/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+var disqus_identifier = '2019/01/06/metrics-core简析/';
+var disqus_title = 'metrics-core 简析';
+var disqus_url = 'http://yoursite.com/2019/01/06/metrics-core简析/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2019 <a href="http://yoursite.com">John Doe</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
